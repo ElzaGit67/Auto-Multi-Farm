@@ -1,0 +1,102 @@
+for i,v in pairs(game.CoreGui:GetDescendants()) do
+    if v:IsA("ScreenGui") and v.Name == "SG" then
+v.Frame.TB1.Text = "Disabled"
+        v:Destroy()
+    end
+end
+ 
+local SG = Instance.new("ScreenGui", game.CoreGui)
+SG.Name = "SG"
+-------------------------------
+local Frame = Instance.new("Frame", SG)
+Frame.Size = UDim2.fromScale(0.32, 0.2)
+Frame.AnchorPoint = Vector2.new(0.5,0.5)
+Frame.Position = UDim2.fromScale(0.5, 0.15)
+-------------------------------
+local TextBox = Instance.new("TextBox", Frame)
+TextBox.Font = Enum.Font.Ubuntu
+TextBox.Text = ""
+TextBox.PlaceholderText = "Location"
+TextBox.PlaceholderColor3 = Color3.fromRGB(50,50,50)
+TextBox.Size = UDim2.fromScale(0.8, 0.5)
+TextBox.TextScaled = true
+TextBox.AnchorPoint = Frame.AnchorPoint
+TextBox.Position = UDim2.fromScale(0.5, 0.3)
+TextBox.ClearTextOnFocus = false
+-------------------------------
+local UICorner1 = Instance.new("UICorner", TextBox)
+local UIStroke1 = Instance.new("UIStroke", TextBox)
+UIStroke1.ApplyStrokeMode = "Border"
+UIStroke1.Thickness = 1.5
+-------------------------------
+local TextBt = Instance.new("TextButton", Frame)
+TextBt.Name = "TB1"
+local Color = Color3.fromRGB(255, 0, 0)
+TextBt.BackgroundColor3 = Color
+TextBt.Text = "Disabled"
+TextBt.AnchorPoint = Frame.AnchorPoint
+TextBt.Position = UDim2.fromScale(0.25,0.8)
+TextBt.Size = UDim2.fromScale(0.4,0.3)
+TextBt.TextScaled = true
+-------------------------------
+local TextBt2 = Instance.new("TextButton", Frame)
+TextBt2.BackgroundColor3 = Color3.fromRGB(255,0,0)
+TextBt2.Text = "Close"
+TextBt2.AnchorPoint = Frame.AnchorPoint
+TextBt2.Position = UDim2.fromScale(0.75,0.8)
+TextBt2.Size = UDim2.fromScale(0.4,0.3)
+TextBt2.TextScaled = true
+-------------------------------
+TextBt2.MouseButton1Click:Connect(function()
+TextBt.Text = "Disabled"
+game.CoreGui.SG:Destroy()
+end)
+-------------------------------
+local UICorner3 = Instance.new("UICorner", TextBt2)
+local UIStroke3 = Instance.new("UIStroke", TextBt2)
+UIStroke3.ApplyStrokeMode = "Border"
+UIStroke3.Thickness = 1.5
+-------------------------------
+local UICorner2 = Instance.new("UICorner", TextBt)
+local UIStroke2 = Instance.new("UIStroke", TextBt)
+UIStroke2.ApplyStrokeMode = "Border"
+UIStroke2.Thickness = 1.5
+-------------------------------
+TextBt.MouseButton1Click:Connect(function()
+    if TextBox.Text ~= "" then
+        if TextBt.Text == "Disabled" then
+            Color = Color3.fromRGB(0, 255, 25)
+            TextBt.BackgroundColor3 = Color
+            TextBt.Text = "Enabled"
+        elseif TextBt.Text == "Enabled" then
+            Color = Color3.fromRGB(255, 0, 0)
+            TextBt.BackgroundColor3 = Color
+            TextBt.Text = "Disabled"
+        end
+    end
+end)
+ 
+ 
+while wait() do
+    if TextBox.Text ~= "" then
+        if TextBt.Text == "Enabled" then
+            local location = workspace.Buttons.Multi[TextBox.Text]:GetDescendants()
+            
+            repeat
+            local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+            for i,v in pairs(location) do
+                if v:IsA("Part") then
+                    firetouchinterest(plr, v, 0)
+                end
+            end
+            local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
+            for i,v in pairs(location) do
+                if v:IsA("Part") then
+                    firetouchinterest(plr, v, 1)
+                end
+            end
+wait(0.1)
+            until TextBt.Text == "Disabled"
+        end
+    end
+end
