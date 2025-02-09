@@ -11,39 +11,34 @@ SG.Name = "SG"
 local Frame = Instance.new("Frame", SG)
 Frame.Size = UDim2.fromScale(0.4, 0.25)
 Frame.AnchorPoint = Vector2.new(0.5,0.5)
-Frame.Position = UDim2.fromScale(0.5, 0.17)
+Frame.Position = UDim2.fromScale(0.5, 0.175)
+-------------------------------
+local TextBt3 = Instance.new("TextButton", SG)
+TextBt3.Size = UDim2.fromScale(0.06,0.06)
+TextBt3.Text = "Hide"
+TextBt3.BackgroundColor3 = Color3.fromRGB(255,0,0)
+TextBt3.Font = "Ubuntu"
+TextBt3.TextScaled = true
+TextBt3.AnchorPoint = Frame.AnchorPoint
+TextBt3.Position = UDim2.fromScale(0.705, 0.05)
+local OldPos = UDim2.fromScale(0.705, 0.05)
+local NewPos = UDim2.fromScale(0.86, -0.03)
 -------------------------------
 local TextBox = Instance.new("TextBox", Frame)
 TextBox.Font = Enum.Font.Ubuntu
 TextBox.Text = ""
-TextBox.PlaceholderText = "Location"
+TextBox.PlaceholderText = "Stat"
 TextBox.PlaceholderColor3 = Color3.fromRGB(50,50,50)
-TextBox.Size = UDim2.fromScale(0.4, 0.4)
+TextBox.Size = UDim2.fromScale(0.8, 0.5)
 TextBox.TextScaled = true
 TextBox.AnchorPoint = Frame.AnchorPoint
-TextBox.Position = UDim2.fromScale(0.25, 0.28)
+TextBox.Position = UDim2.fromScale(0.5, 0.3)
 TextBox.ClearTextOnFocus = false
--------------------------------
-local TextBox2 = Instance.new("TextBox", Frame)
-TextBox2.Font = Enum.Font.Ubuntu
-TextBox2.Text = ""
-TextBox2.PlaceholderText = "Stat"
-TextBox2.PlaceholderColor3 = Color3.fromRGB(50,50,50)
-TextBox2.Size = UDim2.fromScale(0.4, 0.4)
-TextBox2.TextScaled = true
-TextBox2.AnchorPoint = Frame.AnchorPoint
-TextBox2.Position = UDim2.fromScale(0.75, 0.28)
-TextBox2.ClearTextOnFocus = false
 -------------------------------
 local UICorner1 = Instance.new("UICorner", TextBox)
 local UIStroke1 = Instance.new("UIStroke", TextBox)
 UIStroke1.ApplyStrokeMode = "Border"
 UIStroke1.Thickness = 1.5
--------------------------------
-local UICorner4 = Instance.new("UICorner", TextBox2)
-local UIStroke4 = Instance.new("UIStroke", TextBox2)
-UIStroke4.ApplyStrokeMode = "Border"
-UIStroke4.Thickness = 1.5
 -------------------------------
 local TextBt = Instance.new("TextButton", Frame)
 TextBt.Name = "TB1"
@@ -51,16 +46,16 @@ local Color = Color3.fromRGB(255, 0, 0)
 TextBt.BackgroundColor3 = Color
 TextBt.Text = "Disabled"
 TextBt.AnchorPoint = Frame.AnchorPoint
-TextBt.Position = UDim2.fromScale(0.3,0.8)
-TextBt.Size = UDim2.fromScale(0.3,0.3)
+TextBt.Position = UDim2.fromScale(0.25,0.8)
+TextBt.Size = UDim2.fromScale(0.4,0.3)
 TextBt.TextScaled = true
 -------------------------------
 local TextBt2 = Instance.new("TextButton", Frame)
 TextBt2.BackgroundColor3 = Color3.fromRGB(255,0,0)
 TextBt2.Text = "Close"
 TextBt2.AnchorPoint = Frame.AnchorPoint
-TextBt2.Position = UDim2.fromScale(0.7,0.8)
-TextBt2.Size = UDim2.fromScale(0.3,0.3)
+TextBt2.Position = UDim2.fromScale(0.75,0.8)
+TextBt2.Size = UDim2.fromScale(0.4,0.3)
 TextBt2.TextScaled = true
 -------------------------------
 TextBt2.MouseButton1Click:Connect(function()
@@ -91,21 +86,37 @@ TextBt.MouseButton1Click:Connect(function()
         end
     end
 end)
+
+TextBt3.MouseButton1Click:Connect(function()
+        if TextBt3.Text == "Hide" then
+local Color2 = Color3.fromRGB(0, 255, 0)
+TextBt3.BackgroundColor3 = Color2
+Frame.Visible = false
+TextBt3.Position = NewPos
+            TextBt3.Text = "Show"
+        elseif TextBt3.Text == "Show" then
+local Color2 = Color3.fromRGB(255, 0, 0)
+TextBt3.BackgroundColor3 = Color2
+TextBt3.Position = OldPos
+Frame.Visible = true
+            TextBt3.Text = "Hide"
+        end
+end)
  
  
 while wait() do
-    if TextBox.Text ~= "" and TextBox2.Text ~= "" then
+    if TextBox.Text ~= "" then
         if TextBt.Text == "Enabled" then
+            local location = workspace.FullButtons[TextBox.Text]:GetDescendants()
             repeat
             local plr = game.Players.LocalPlayer.Character.HumanoidRootPart
-local location = game.Workspace.FullButtons[TextBox2.Text][TextBox.Text]
-for i,v in pairs(location:GetChildren()) do
-if v:IsA("Part") then
+            for i,v in pairs(location) do
+                if v:IsA("Part") and v.Parent.Name == TextBox.Text then
                     firetouchinterest(plr, v, 0)
 firetouchinterest(plr, v, 1)
-end
-end
-                    wait(0.05)
+                end
+            end
+wait(0.1)
             until TextBt.Text == "Disabled"
         end
     end
