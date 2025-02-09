@@ -24,6 +24,11 @@ TextBt3.Position = UDim2.fromScale(0.705, 0.05)
 local OldPos = UDim2.fromScale(0.705, 0.05)
 local NewPos = UDim2.fromScale(0.86, -0.03)
 -------------------------------
+local UICorner10 = Instance.new("UICorner", TextBt3)
+local UIStroke10 = Instance.new("UIStroke", TextBt3)
+UIStroke10.ApplyStrokeMode = "Border"
+UIStroke10.Thickness = 1.5
+-------------------------------
 local TextBox = Instance.new("TextBox", Frame)
 TextBox.Font = Enum.Font.Ubuntu
 TextBox.Text = ""
