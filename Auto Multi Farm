@@ -95,7 +95,7 @@ while wait() do
                     firetouchinterest(plr, v, 1)
                 end
             end
-wait(0.1)
+wait(0.05)
             until TextBt.Text == "Disabled"
         end
     end
